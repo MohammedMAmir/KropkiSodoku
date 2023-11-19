@@ -163,7 +163,24 @@ def create_row_and_col_constraints(dim, sat_tuples, variables):
     :returns: A list of binary all-different constraints
     :rtype: List[Constraint]
     """
+    outputList = []
+    for i in range(1, dim+1):
+        for j in range(1, dim+1):
+            for k in range(j+1, dim):
+                currVar = [x for x in variables if x.name == "Var(" + str(i) + ", " + str(j)]
+                varInRow = [x for x in variables if x.name =="Var(" + str(i) + ", " + str(k)]
+                outputList.append(Constraint(currVar+"_Row", [currVar, varInRow]))
+            for k in range(i+1,dim):
+                currVar = [x for x in variables if x.name == "Var(" + str(i) + ", " + str(j)]
+                varInRow = [x for x in variables if x.name =="Var(" + str(k) + ", " + str(j)]
+                outputList.append(Constraint(currVar+"_Col", [currVar, varInRow]))
     
+    for i in range(len(outputList)):
+        outputList.add_satisfying_tuples(sat_tuples)
+ 
+    return outputList
+    
+
     raise NotImplementedError
     
     
@@ -184,6 +201,14 @@ def create_cage_constraints(dim, sat_tuples, variables):
     :returns: A list of binary all-different constraints
     :rtype: List[Constraint]
     """
+    outputList = []
+    if(dim == 6):
+        while(i < dim):
+            while(j < dim):
+                
+    else:
+        i = 1
+        while(i < dim + 1):
 
     raise NotImplementedError
     
