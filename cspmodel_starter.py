@@ -202,9 +202,18 @@ def create_cage_constraints(dim, sat_tuples, variables):
     :rtype: List[Constraint]
     """
     outputList = []
+    cageRowBase = 1
+    cageColBase = 1
     if(dim == 6):
-        while(i < dim):
-            while(j < dim):
+        i = 1
+        j = 1
+        while(i < cageRowBase + 4):
+            while(j < cageColBase + 4):
+                currVar = [x for x in variables if x.name == "Var(" + str(i) + ", " + str(j)]
+                varRight = [x for x in variables if x.name == "Var(" + str(i) + ", " + str(j+1)]
+                outputList.append(Constraint(currVar+"_Cage", [currVar varRight ]))
+                varDownOne = varRight = [x for x in variables if x.name == "Var(" + str(i+1) + ", " + str(j)]
+                
                 
     else:
         i = 1
